@@ -19,7 +19,7 @@ public class TelaLogin extends JFrame {
 	private JPanel contentPane;
 	private JTextField tfLogin;
 	private JPasswordField pass;
-	private int contSenha = 0;
+	
 
 	/**
 	 * Launch the application.
@@ -44,7 +44,7 @@ public class TelaLogin extends JFrame {
 		setTitle("Acesso ao Sistema");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 238);
+		setBounds(100, 100, 617, 238);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -64,38 +64,12 @@ public class TelaLogin extends JFrame {
 		contentPane.add(lblEntreComA);
 		
 		JButton btnEntrar = new JButton("Entrar...");
+		btnEntrar.setEnabled(false);
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-			
-				
-				
-				String login = tfLogin.getSelectedText();
-				
-				String senha = String.valueOf(pass.getPassword());
-				
-				if (tfLogin.getText().equals("Raphael") && (senha.equals("UNIP")&& contSenha < 3))
-				{
-					JOptionPane.showMessageDialog(null, "Bem Vindo ao Sistema!");
-					
-				}else if (contSenha == 3) {
-		            JOptionPane.showMessageDialog(null, "Excedeu o numero de tentativas, usuÃ¡rio bloqueado! o programa serÃ¡ encerrado.");
-		            System.exit(0);
-				
-				}else { 
-		            JOptionPane.showMessageDialog(null, "Tente Novamente, vocÃª ainda tem mais, "+(3-contSenha)+" tentativas");
-		            contSenha++;
-		            tfLogin.setText("");
-		            pass.setText("");
-		            contentPane.setVisible(true);
-		            
-		        }
-				
-				
-				
-
-				
-				
+				JOptionPane.showMessageDialog(null, "Bem Vindo ao Sistema..." );
+								
 			}
 		});
 		btnEntrar.setBounds(35, 168, 117, 29);
@@ -121,7 +95,74 @@ public class TelaLogin extends JFrame {
 		contentPane.add(btnSair);
 		
 		pass = new JPasswordField();
+		pass.setEditable(false);
 		pass.setBounds(209, 96, 205, 26);
 		contentPane.add(pass);
+		
+		JButton btnValidarSenha = new JButton("Validar Senha");
+		btnValidarSenha.setEnabled(false);
+		
+		JButton btnValidarLogin = new JButton("Validar Login");
+		btnValidarLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int contSenha = 3;
+				String login = tfLogin.getText();
+				
+				
+			
+				while(!login.equals("Raphael")) 
+				{
+					
+					
+					login = JOptionPane.showInputDialog("Login invalido, tente novamente, voce ainda tem "+ contSenha + " tentativas");
+					contSenha--;
+					
+					if(contSenha == 0 && !login.equals("Raphael"))
+					{
+						JOptionPane.showMessageDialog(null, "Usuario sem acesso ao sistema, o sistema será encerrado..." );
+						System.exit(0);
+					}
+				}
+				
+				tfLogin.setText("");
+				tfLogin.setEditable(false);
+				btnValidarLogin.setEnabled(false);
+				pass.setEditable(true);;
+				btnValidarSenha.setEnabled(true);
+			}
+		});
+		btnValidarLogin.setBounds(436, 48, 124, 23);
+		contentPane.add(btnValidarLogin);
+		
+		
+		btnValidarSenha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int contSenha = 3;
+				
+				String senha = String.valueOf(pass.getPassword());
+			
+				while(!senha.equals("UNIP")) 
+				{
+					contSenha--;
+					
+					senha = JOptionPane.showInputDialog("Senha invalida, tente novamente, voce ainda tem "+ contSenha + " tentativas");
+					
+					
+				if(contSenha == 0 && !senha.equals("UNIP"))
+				{
+					JOptionPane.showMessageDialog(null, "Usuario sem acesso ao sistema, o sistema será encerrado..." );
+					System.exit(0);
+				}
+				}
+				JOptionPane.showMessageDialog(null, "Acesse o sistema clicando no botão ENTRAR..." );
+				btnEntrar.setEnabled(true);
+				
+				
+			}
+		});
+		btnValidarSenha.setBounds(436, 98, 124, 23);
+		contentPane.add(btnValidarSenha);
 	}
 }

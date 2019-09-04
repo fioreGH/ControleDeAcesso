@@ -156,6 +156,9 @@ public class TelaLogin extends JFrame {
 					System.exit(0);
 				}
 				}
+				pass.setText("");
+				pass.setEditable(false);
+				btnValidarSenha.setEnabled(false);
 				JOptionPane.showMessageDialog(null, "Acesse o sistema clicando no botão ENTRAR..." );
 				btnEntrar.setEnabled(true);
 				
